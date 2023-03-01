@@ -1,0 +1,3 @@
+# ninja log v5
+0	527	1677665097585723268	/home/sanket/Desktop/Projects/TensorRT_demo/bev_pool/build/temp.linux-x86_64-cpython-38/src/bev_pool_cuda.o	9a3fd0add61d0adb
+0	13811	1677665110862514724	/home/sanket/Desktop/Projects/TensorRT_demo/bev_pool/build/temp.linux-x86_64-cpython-38/src/bev_pool.o	748285d790fc47a4
