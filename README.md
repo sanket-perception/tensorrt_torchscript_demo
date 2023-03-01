@@ -59,6 +59,30 @@ This will print the first 5 values of the predicted 1000 probabilities by the ne
 
 In conclusion, we deserialized a Torchscript module in c++originally created with Python and passed dummy inputs to perform inference with the network.
 
+## E. Using Custom Operations with TorchScript
+Torchscript allows for registering custom operations written in CUDA/C++ as torch extensions. In other words, the way we use native torch functions like add() with `torch.add()`, after this process, one can use custom_op with `torch.my_op.custom_op()` given `custom_op` is registered witing `my_op' namespace. Let us look at an example to understand how this is achieved. 
+
+We leverage our custom OP called `bevpool_forward()` written in C++/CUDA.
+In the C++ files we add the following lines of code to register it with TorchScript.
+
+
+```
+
+TORCH_LIBRARY(my_ops, m) {
+  m.def("bev_pool_forward", &bev_pool_forward);
+}
+```
+
+where `my_ops` is the namespace, `bev_pool_forward` is the name of the operation. Then we enter the following command to build this extenstion from within the `bev_pool` directory.
+
+```
+python setup.py install 
+```
+
+This will create a `build` directory inside `bev_pool` directory and store the corresponding library within it's `lib` directory.
+
+The [notebook](notebooks/Custom_Op.ipynb) contains the script to first demonstrate how to load this library and use this custom ops with torch. 
+Furthermore, it also shows how to build a torcscript, this time with our CustomOp. 
 
 
 
