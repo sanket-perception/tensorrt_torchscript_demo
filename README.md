@@ -33,3 +33,34 @@ It is a tool to incrementally transition a model from a pure Python program to a
 Let us look at the same model as we explored with TensorRT, using TorchScript to understand how this framework works. Please refer to [this notebook](/notebooks/Simple%20Classification%20Model%20%20TorchScript.ipynb) for further details.
 
 
+## D. Loading TorchScript in C++ 
+The main objective of converting a torch model to Torchscript is to allow for portability from python to C++ environment. To that end, let us look at how our  torchscript engine, we generated in previous step. We will deserialize the torch script module and give dummy inputs to the network in C++ to perform inference.
+The C++ file [inference.cpp](cpp_files/inference.cpp) contains the script for loading Torchscript in C++ and performing inference on dummy inputs.
+To build this project, run the following commands in the terminal.
+
+```
+cd cpp_files/
+mkdir build
+cd build
+cmake -DCMAKE_PREFIX_PATH=/path/to/libtorch ..
+cmake --build . --config Release
+
+```
+
+where `/path/to/libtorch` should be the full path to the unzipped LibTorch distribution. 
+
+If all goes well, there will be a `inference` executable inside build directory. Finally to run inference, execute the following command in terminal from build directory :
+
+```
+./inference <path_to_repo>/torchscript_engines/simple_classifier.pt
+```
+
+This will print the first 5 values of the predicted 1000 probabilities by the network.
+
+In conclusion, we deserialized a Torchscript module in c++originally created with Python and passed dummy inputs to perform inference with the network.
+
+
+
+
+
+
