@@ -24,7 +24,7 @@ def bev_pool(x, geom_feats, B, D, H, W):
     interval_lengths[:-1] = interval_starts[1:] - interval_starts[:-1]
     interval_lengths[-1] = x.shape[0] - interval_starts[-1]
     geom_feats = geom_feats.int()
-    torch.ops.load_library("/home/sanket/Desktop/Projects/TensorRT_demo/bev_pool/build/lib.linux-x86_64-cpython-38/bev_pool_forward.cpython-38-x86_64-linux-gnu.so")
+    torch.ops.load_library("/home/ubuntu/workstation/motorai/tensorrt_torchscript_demo/bev_pool/build/lib.linux-x86_64-cpython-38/bev_pool_forward.cpython-38-x86_64-linux-gnu.so")
     x = torch.ops.my_ops.bev_pool_forward(
         x,
         geom_feats.long(),
@@ -109,8 +109,8 @@ class BEVPool(nn.Module):
 
 bevpool = BEVPool()
 
-geom = torch.load("/home/sanket/Desktop/Projects/TensorRT_demo/data/geom.pt")
-x = torch.load("/home/sanket/Desktop/Projects/TensorRT_demo/data/x.pt")
+geom = torch.load("data/geom.pt")
+x = torch.load("data/x.pt")
 
 # x = bevpool(geom,x)
 
